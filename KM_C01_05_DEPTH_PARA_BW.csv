@@ -1,0 +1,313 @@
+OPTIONS,USER INPUTS,OPTION INFORMATION
+,,
+FILES AND DIRECTORY,,
+directory**,G:\\PPSP,Provide an entry for working directory name seperated by \\ at each new subdirectory.
+input_file_name**,KM_C01_05_DEPTH_BW,Provide an entry of the data file (csv fil) name without csv extension.
+output_file_name**,KM_C01_05_DEPTH_BW,Provide an entry name for the stratigraphy output file (outputs are automatically in eps format and can be opened in Inkscape or similar). Do not add any file extensions.
+image_format**,png,"Provide and entry  for an other output file format.  Options are png, jpeg or 'none' if not required."
+,,
+,,
+CANVAS,,
+canvas_width_mm**,460,Provide an entry for the canvas width. This is in mm and therefore users can measure their monitor to ensure canvas will fit/fill enough of the screen.
+canvas_height_mm**,300,Provide an entry for the canvas height. This is in mm and therefore users can measure their monitor to ensure canvas will fit/fill enough of the screen.
+figure_scale_factor**,0.65,Provide an entry for the figure scale factor. This is the ratio reduction of the entire canvas that the actual figure will use. Values between 0.5 and 1 are suggested with 0.7 as a start.
+figure_border**,5,Provide an entry for the borderwidth around the stratigraphy core plotting area and the axes. Provide in mm.
+,,
+,,
+MAIN TITLE,,
+main_title_on_off**,on,Provide an entry for the main title on or off. Options are on or off.
+main_title,"Keighley Moor transect A (cores 15, 76, 83, 78 and master)",Provide an entry of text for main title if required.
+main_title_colour,black,Provide an entry for the main title text colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+main_title_size,26,Provide an entry for the main title text font size if required.
+main_title_style,bold,"Provide an entry for the main title style if required. Available options are normal, bold or italic."
+main_title_v_adjust,15,"Provide an entry for minor vertical adjustment for main title in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+main_title_h_adjust,-5,"Provide an entry for minor horizontall adjustment for main title in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+,,
+,,
+X AXIS,,
+x_axis_colour**,black,Provide an entry for X axis line colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+x_axis_width**,2,Provide an entry for X axis line width. Entries between 1 and 3 are typical.
+,,
+x_title_on_off**,on,Provide an entry for x title on or off. Options are on or off.
+x_title_line_1,Distance (m),Provide an entry for x axis title line 1 if required.
+x_title_line_2,,Provide an entry for x axis title line 2 if required.
+,,
+x_title_font_size,16,Provide an entry for X axis title font size if required.
+x_title_colour,black,Provide an entry for X title colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+x_title_style,normal,"Provide an entry for X_axis title font style if required. Available options are normal, bold or italic."
+x_title_v_adjust,-20,"Provide an entry for minor vertical adjustment for x axis title if required in mm. Positive values move upward, negative downward."
+x_title_h_adjust,0,"Provide an entry for minor horizontal adjustment for x axis title if required in mm. Positive values move upward, negative downward."
+,,
+x_major_ticks**,0*10*20*30*40*50*60,Provide an entry for X axis major tick labels to be added to axis. Separate each with * . There should be no spaces.
+x_major_shift**,0,Provide an entry for X major shift if required. If no shift is needed add a 0 (zero). See manual for further details.
+x_major_tick_decimal**,0,Provide an entry for  the decimal places required for major axis ticks.
+x_major_tick_length**,3,Provide an entry for X axis major tick length in mm.
+x_major_tick_width**,2,Provide an entry for X axis major tick width in mm.
+x_major_tick_colour**,dimgray,Provide an entry for X axis tick colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+x_minor_ticks_on_off**,on,Provide an entry for X minor ticks on or off. Options are on or off.
+x_minor_tick_length,1.5,Provide an entry for X minor tick length in mm if required.
+x_minor_tick_width,2,Provide an entry for X axis minor tick width if required
+x_minor_tick_colour,black,Provide an entry for X axis minor tick colour if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+x_minor_ticks_max,54,Provide an entry for X minor ticks maximum value if required.
+x_minor_ticks_step,2,Provide an entry for X minor ticks step increment if required.
+,,
+x_label_font_size**,14,Provide an entry for X axis label font size (x and y are treated the same).
+x_label_colour**,black,Provide an entry for X axis label colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+x_label_style**,normal,"Provide an entry for X axis label font style. Available options are normal, bold or italic."
+x_tick_label_v_adjust**,-8,"Provide an entry for minor vertical adjustment for X major tick label if required in mm. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+x_tick_label_h_adjust**,4,"Provide an entry for minor horizontal adjustment for X major tick label if required in mm. Positive values move right, negative left. If no adjustment required provide an entry of 0 (zero)."
+,,
+,,
+Y AXIS,,
+y_axis_colour**,black,Provide an entry for Y axis colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+y_axis_width**,2,Provide an entry for Y axis line width.
+,,
+y_axis_title_on_off**,on,Provide an entry for y title on or off. Options are on or off.
+y_axis_title_line_1,Depth (m),Provide an entry for y axis title line 1 if required.
+y_axis_title_line_2,,Provide an entry for y axis title line 2 if required.
+,,
+y_title_font_size,16,Provide an entry for Y axis title font size if required.
+y_title_style,normal,"Provide an entry for y_axis title font style if required. Available options are normal, bold or italic."
+y_title_colour,black,Provide an entry for Y title colour if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+y_title_v_adjust,0,"Provide an entry for minor vertical adjustment for y axis title if required in mm. Positive values move upward, negative downward."
+y_title_h_adjust,-30,"Provide an entry for minor horizontal adjustment for y axis title if required in mm. Positive values move upward, negative downward."
+,,
+y_major_ticks**,0*-0.5*-1*-1.5*-2*-2.5*-3*-3.5,Provide an entry for y axis major tick labels to be added to axis. Separate each with * . There should be no spaces.
+y_major_ticks_depth_mode**,on,Provide an entry for y_major_ticks_depth_mode. See manual for details.
+y_major_tick_decimal**,1,Provide an entry for decimal places required for major axis ticks.
+y_major_tick_length**,3,Provide an entry for Y axis major tick length in mm.
+y_major_tick_width**,2,Provide an entry for Y axis major tick width.
+y_major_tick_colour**,black,Provide an entry for Y axis major tick colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+y_label_font_size**,14,Provide an entry for Y axis label font size (x and y are treated the same).
+y_label_colour**,black,Provide an entry for Y axis label colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+y_label_style**,normal,"Provide an entry for Y axis label font style. Available options are normal, bold or italic."
+y_tick_label_v_adjust**,-3,"Provide an entry for minor vertical adjustment for Y major tick label if required in mm. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+y_tick_label_h_adjust**,-2,"Provide an entry for minor horizontal adjustment for Y major tick label if required in mm. Positive values move right, negative left. If no adjustment required provide an entry of 0 (zero)."
+,,
+y_minor_ticks_on_off**,on,Provide an entry for Y minor ticks on or off. Options are on or off.
+y_minor_tick_length,1.5,Provide an entry for Y minor tick length in mm if required.
+y_minor_tick_width,1,Provide an entry for Y axis minor tick width if required
+y_minor_tick_colour,black,Provide an entry for Y axis minor tick colour if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+y_minor_ticks_max,0,Provide an entry for Y minor ticks maximum value if required.
+y_minor_ticks_step,0.1,Provide an entry for Y minor ticks step increment if required.
+,,
+y_grid_on_off**,on,Provide an entry for Y grid lines on or off. Options are on or off.
+y_grid_style,dashed,Provide an entry for Y grid style if required. Options are dashed or solid. Dash length can be altered with dash length below allowing graduation to a dotted effect.
+y_grid_colour,dimgray,Provide an entry for Y grid line colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+y_grid_width,1,Provide an entry for Y grid line width if required.
+y_grid_length_adjust,4.5,Provide an entry for Y grid lengths. Add more length if required in mm.
+y_grid_dash_length,2,Provide an entry for Y grid dash length in mm if required. Each dash will be this long.
+,,
+,,
+CORE JOINING LINE,,
+surface_join_line_on_off**,off,Provide an entry for surface join line on or off.Options are on or off.
+surface_join_line_colour,darkgray,Provide an entry for surface join line colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+surface_join_line_width,1,Provide an entry for surface join line width (typically use value of 1 to 3) if required.
+surface_join_line_style,dashed,Provide an entry for surface join style if required. Available options are dashed or solid.
+surface_join_line_dash_length,1,Provide an entry for surface join line dash length if required in mm. Each dash will be this long.
+,,
+base_join_line_on_off**,off,Provide an entry for base join line on or off.Options are on or off.
+base_join_line_colour,darkgray,Provide an entry for base join line colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+base_join_line_width,1,Provide an entry for base join line width (typically use value of 1 to 3) if required.
+base_join_line_style,dashed,Provide an entry for base join style if required. Available options are dashed or solid.
+base_join_line_dash_length,1,Provide an entry for base join line dash length if required in mm. Each dash will be this long.
+,,
+,,
+TROELS SMITH,,
+ts_width_section**,3,Provide an entry for stratigraphy rectangle width used in the Troels Smith stratigraphy plots (one of the four that make up the TS scheme). Provide in mm.
+line_colour**,black,Provide an entry for Line colour to be used for the rectangles used in the Troels Smith stratigraphy plots (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+Remove segments**,off,Entry of 'on' or 'off' is required here. This will allow the plotting of non TS like 4 part rectangles if the same entries are supplied such as Tl-Tl-Tl-Tl. See manual for examples. 
+,,
+Nomenclature,,
+Argilla steatodes**,silver-n,Provide an entry for colour used for Argilla granosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Argilla granosa**,gray,Provide an entry for colour used for Argilla steatodes. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana arenosa**,silver-n,Provide an entry for colour used for Detritus granosus. Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana saburralia**,gray-n,Provide an entry for colour used for Detritus herbosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana glareosa minora**,silver,Provide an entry for colour used for Detritus lignosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana glareosa majora**,gray-n,Provide an entry for colour used for Grana arenosa .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Detritus granosus**,crimson-n,Provide an entry for colour used for Grana glareosa majora .Follow with '-n' as part of the associated legend  if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Detritus herbosus**,fuchsia-n,Provide an entry for colour used for  Grana glareosa minora .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Detritus lignosus**,darkviolet-n,Provide an entry for colour used for Grana saburralia .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Limus calcareus**,skyblue-n,Provide an entry for colour used for Limus calcareus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Limus detrituosus**,deepskyblue-n,Provide an entry for colour used for Limus detrituosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Limus ferrugineus**,steelblue-n,Provide an entry for colour used for Limus ferrugineus . Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Particulae testae molloscorum**,white-n,Provide an entry for colour used for Particulae testae molloscorum . Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Substantia humosa**,black,Provide an entry for colour used for Substantia humosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa bryophitica**,white ,Provide an entry for colour used for Turfa bryophitica. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa herbosa**,lightgray,Provide an entry for colour used for Turfa herbosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa lignosa**,darkgray,Provide an entry for colour used for Turfa lignosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Unrecovered**,white-n,Provide an entry for colour used for Unrecovered. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+Use alternative TS name**,off,Provide an entrty of 'on' or 'off'. This allows the user to use a custom label in the TS legend for the component if the latin term is not wanted. 
+,,
+Argilla steatodes alt**,Clay,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Argilla granosa alt**,Silt,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana arenosa alt**,Fine sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana saburralia alt**,Medium sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana glareosa minora alt**,Coarse sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana glareosa majora alt**,Gravel,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus granosus alt**,Ligneous and herbceous plants < 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus herbosus alt**,Herbaceous plants > 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus lignosus alt**,Wood / bark > 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus calcareus alt**,Homo. soil (with Calcium carbonate)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus detrituosus alt**,Homo. soil (<0.1 mm)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus ferrugineus alt**,Homogeneous soil (with Iron oxides)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Particulae testae molloscorum alt**,parts of mollusc shells > 0.1 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Substantia humosa alt**,Humus,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa lignosa alt**,Woody peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa herbosa alt**,Herb peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa bryophitica alt**,Moss peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Unrecovered alt**,Not there-n,Supply alternative name if required
+,,
+,,
+Use Pattern,,
+,,
+Argilla steatodes tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Argilla granosa tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana arenosa tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana saburralia tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana glareosa minora tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana glareosa majora tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+,,
+,,
+TROELS SMITH LEGEND,,
+legend_on_off**,on,Provide an entry for legend on or off. Options are on or off.
+,,
+legend_title_on_off,on,Provide an entry for legend title on or off if required. Options are on or off.
+legend_title,Troels Smith,Provide an entry for legend title for Troels Smith data if required.
+legend_title_size,12,Provide an entry for legend title font size if required.
+legend_title_style,bold,"Provide an entry for legend title style if required. Available options are normal, bold or italic."
+legend_title_colour,black,Provide an entry for legend title colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+legend_title_v_adjust,3,"Provide an entry for legend title vertical adjustment in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+legend_title_h_adjust,0,"Provide an entry for legend title horizontal adjustment in mm  if required. Positive values move right, negative left. If no adjustment required provide an entry of 0 (zero)."
+,,
+legend_x_position,330,Provide an entry for legend X position in mm if required.
+legend_y_position,125,Provide an entry for legend Y position in mm if required.
+,,
+legend_font_size,10,Provide an entry for legend text font size if required.
+legend_font_style,italic,"Provide an entry for legend text style if required. Available options are normal, bold or italic."
+,,
+legend_text_colour,black,Provide an entry for legend text colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+legend_section_height,8,Provide an entry for legend section height in mm if required .
+legend_section_width,15,Provide an entry for legend section width in mm if required .
+,,
+legend_label_v_adjust,-2,"Provide an entry for legend label vertical adjustment in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+legend_label_h_adjust,0,"Provide an entry for legend label horizontal adjustment in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+,,
+,,
+VON POST,,
+vp_on_off**,on,Provide an entry for von Post display on or off. Options are on or off.
+vp_border_colour,white,Provide an entry for colour for border between sections if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+vp_width_section,4,Provide an entry for von Post rectangle width if required . Provide in mm.
+gap_between_TS_and_vp,2,Provide an entry for gap in mm between von Post and Troels smith data if required.
+,,
+Humification levels,,
+H1,whitesmoke,Provide an entry for H1  colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H2,whitesmoke,Provide an entry for H2 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H3,lightgray,Provide an entry for H3 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H4,lightgray,Provide an entry for H4 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H5,darkgray,Provide an entry for H5 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H6,darkgray,Provide an entry for H6 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H7,gray,Provide an entry for H7 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H8,gray,Provide an entry for H8 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H9,black,Provide an entry for H9 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H10,black,Provide an entry for H10 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+N_A,white,Not applicable
+,,
+VON POST LEGEND,,
+legend_on_off_vp**,on,Provide an entry for legend for von Post data on or off. Options are on or off.
+,,
+legend_title_on_off_vp,on,Provide an entry for legend title for von Post data on or off if required.Options are on or off.
+legend_title_vp,von Post,Provide an entry for legend title for von Post data if required.
+legend_title_size_vp,12,Provide an entry for legend title font size for von Post data if required.
+legend_title_style_vp,bold,"Provide an entry for legend title style for von Post data if required. Available options are normal, bold or italic."
+legend_title_colour_vp,black,Provide an entry for legend title colour for von Post data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+legend_title_v_adjust_vp,3,"Provide an entry for legend title vertical adjustment in mm for von Post data if required. Positive values move upward, negative downward.If no adjustment required provide an entry of 0 (zero)."
+legend_title_h_adjust_vp,0,"Provide an entry for legend title horizontal adjustment in mm for von Post data if required. Positive values move upward, negative downward.If no adjustment required provide an entry of 0 (zero)."
+,,
+legend_x_position_vp,330,Provide an entry for legend X position in mm for von Post data if required.
+legend_y_position_vp,30,Provide an entry for legend Y position in mm if required.
+,,
+legend_font_size_vp,10,Provide an entry for legend text font size for von Post data if required.
+legend_font_style_vp,normal,"Provide an entry for legend text style for von Post data if required. Available options are normal, bold or italic."
+,,
+legend_text_colour_vp,black,Provide an entry for legend text colour for von Post data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+legend_section_height_vp,8,Provide an entry for legend section height in mm for von Post data if required.
+legend_section_width_vp,15,Provide an entry for legend section width in mm for von Post data if required.
+,,
+legend_label_v_adjust_vp,-3,"Provide an entry for legend label vertical adjustment in mm for von Post data if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+legend_label_h_adjust_vp,0,"Provide an entry for legend label horizontal adjustment in mm for von Post data if required. Positive values move right, negative left. If no adjustment required provide an entry of 0 (zero)."
+,,
+,,
+GEOLOGY/BASAL SEDIMENT,,
+border_colour_geo**,black,Provide an entry for Colour used for border (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html)
+,,
+Geology or basal sediment,,
+Coal**,black*black*Coal-n,Provide an entry for colour used for Coal (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Limestone**,black*white*Limestone-n,Provide an entry for colour used for Limestone (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Marl**,black*white*Marl-n,Provide an entry for colour for Marl (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Metamorphic**,black*white*Metamorphic-n,Provide an entry for colour for Metamorphic (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Mudstone**,black*white*Mudstone-n,Provide an entry for colour used for Mudstone (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Sandstone**,black*white*Sandstone,Provide an entry for colour used for Sandstone (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Shale**,black*white*Shale-n,Provide an entry for colour used for Shale (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Siltstone**,black*white*Siltstone-n,Provide an entry for colour used for Siltstone (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Till**,black*white*Till-n,Provide an entry for colour used for Till (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Volcanic**,black*white*Volcanic-n,Provide an entry for colour used for Volcanic (foreground and background seperated by a hyphen and followed by a '-n' if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+GEOLOGY/BASAL SEDIMENT LEGEND,,
+legend_on_off_geo**,on,Provide an entry for legend for geology on or off. Options are on or off.
+,,
+legend_title_on_off_geo,on,Provide an entry for legend title for geology data on or off if required. Options are on or off.
+legend_title_geo,Geology,Provide an entry for legend title for geology data if required.
+legend_title_size_geo,12,Provide an entry for legend title font size for geology data if required.
+legend_title_style_geo,bold,"Provide an entry for legend title style for geology data if required. Available options are normal, bold or italic."
+legend_title_colour_geo,black,Provide an entry for legend title colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+legend_title_v_adjust_geo,3,"Provide an entry for legend title vertical adjustment in mm for geology data if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+legend_title_h_adjust_geo,0,"Provide an entry for legend title horizontal adjustment in mm for geology data if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+,,
+legend_x_position_geo,330,Provide an entry for legend X position in mm for geology data if required.
+legend_y_position_geo,8,Provide an entry for legend Y position in mm for geology data if required.
+,,
+legend_font_size_geo,10,Provide an entry for legend text font size for geology data if required.
+legend_font_style_geo,normal,"Provide an entry for legend text style for geology data if required. Available options are normal, bold or italic."
+,,
+legend_text_colour_geo,black,Provide an entry for legend text colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+legend_section_height_geo,8,Provide an entry for legend section height in mm for geology data if required.
+legend_section_width_geo,15,Provide an entry for legend section width in mm for geology data if required.
+,,
+legend_label_v_adjust_geo,-2,"Provide an entry for legend lable vertical adjustment in mm for geology data if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+legend_label_h_adjust_geo,0,"Provide an entry for legend lable horizontal adjustment in mm for geology data if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+,,
+,,
+CHARCOAL,,
+charcoal_on_off**,on,Provide an entry for charcoal display on or off. Options are on or off.
+,,
+charcoal_width,2,Provide an entry for charcoal display width in mm if required.
+charcoal_colour,black,Provide an entry for charcoal colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+charcoal_line_colour,white,Provide an entry for line colour for charcoal if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+gap_between_TS_and_charcoal,7,Provide an entry for gap in mm between charcoal and Troels smith data if required.
+,,
+,,
+OTHER,,
+other_on_off**,on,Provide an entry for other display on or off. Options are on or off.
+,,
+other_width,2,Provide an entry for other display width in mm if required.
+other_colour,black,Provide an entry for other colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+other_line_colour,white,Provide an entry for line colour for other if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+,,
+gap_between_TS_and_other,9,Provide an entry for gap in mm between other and Troels smith data if required.
+,,
+CORE LABELS,,
+core_label_on_off**,on,Provide an entry for core label display on or off. Options are on or off.
+core_label_size,18,Provide an entry for core label font size if required.
+core_label_style,bold,"Provide an entry for core label style if required. Available options are normal, bold or italic."
+core_label_colour,black,Provide an entry for core label colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+core_label_v_adjust,3,"Provide an entry for core label vertical adjustment in mm if required.  Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
+core_label_h_adjust,-7,"Provide an entry for core label horizontal adjustment if required.  Positive values move right, negative left. If no adjustment required provide an entry of 0 (zero)."

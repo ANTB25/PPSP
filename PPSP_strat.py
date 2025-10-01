@@ -12,7 +12,8 @@
    classifications. However, the program could be used for salt marsh or lake 
    stratigraphy data if Troels Smith has been used. The program can also 
    display von Post and charcoal data alongside the cores.
-   Cores are plotted altitudinally and there is a wide range of aesthetic 
+   Cores are plotted altitudinally but can also be plotted simply with depth
+   and there is a wide range of aesthetic 
    parameters that can be changed to get the figure the user requires. 
    A manual is provided with the download and the user is directed there for 
    instructions in the programs usage. 
@@ -44,12 +45,12 @@
    Output
    ----------
        By defualt at eps file is saved of the figure and possibly a png or jpg
-       deoending on user options seleceted in the parameter file. Outputs are
+       deoending on user options selected in the parameter file. Outputs are
        saved to the location nominated in the parameter file.
    
    The program can be run in an IDE or from the command line. If you run it in 
    an IDE you should comment out the code for argparse in the PPSP_options.py 
-   module (lines 19-26) and uncomment lines 29-30 and add in a location
+   module (lines 46-53) and uncomment lines 55-56 and add in a location
    address and a filename for the parameter file with .csv extension.
    
    The program does have an associated General Public License v3.
@@ -77,7 +78,7 @@
 import math as math
 import numpy as np
 import os as os
-import pandas as pd
+import pandas as pd  
 from tkinter import ttk
 import tkinter.font as TkFont
 from tkinter import *     
@@ -85,13 +86,13 @@ import turtle
 
 ###############################################################################
 from PIL import Image
-from screeninfo import get_monitors
+from PIL import EpsImagePlugin
 
 ###############################################################################
 from PPSP_options import geol_errors as ge
 from PPSP_options import option_sort as oss
 import PPSP_build as bb
-import PPSP_colours as colours
+import PPSP_colours as colours 
 
 ###############################################################################
 ###############################################################################
@@ -112,11 +113,11 @@ print("                                               |       |              ")
 print("        |          ___                                                ")
 print("                    |     |       |         |                         ")
 print(" |  0             0 |                                |                ")
-print("   000   |       /|\|                                        00       ")
-print("  0000         __/_\|___\/_\/__\/_\/___\/_\/__\/_\/__        00       ")
-print("  0000        /______||______________________________\      0000      ")
-print("   00        /_______||_______________________________\      00       ")
-print("   ||       /        ||                                \     ||       ")
+print("   000   |       /|/|                                        00      ")
+print("  0000         __//_|____||__||__||__||__||__||__||___       00      ")
+print("  0000        //______||______________________________\\     0000     ")
+print("   00        //_______||_______________________________\\     00      ")
+print("   ||       //        ||                                \\    ||      ")
 print("----------------------------------------------------------------------")
 print("----------------------------------------------------------------------")
 print("----------------------------------------------------------------------")
@@ -337,6 +338,7 @@ join_dash_length_base = float(options["base_join_line_dash_length"].\
 ###############################################################################    
 wid_x = float(options["ts_width_section**"].replace(" ",""))    
 pen_colour_rect = str(options["line_colour**"]).lower().replace(" ","")   
+remove_seg = str(options["Remove segments**"]).lower().replace(" ","") 
     
 ###############################################################################
 # Obtain Troels Smith legend parameters #######################################
@@ -455,12 +457,31 @@ char_gap = float(options["gap_between_TS_and_charcoal"].replace(" ",""))
 other_wid = float(options["other_width"].replace(" ",""))       
 line_colour_other = str(options["other_line_colour"]).lower().replace(" ","")
 other_gap = float(options["gap_between_TS_and_other"].replace(" ","")) 
+
+###############################################################################
+#Obtain core labels parameters ################################################
+###############################################################################
+core_label_on_off = str(options["core_label_on_off**"]).replace(" ","").lower()
+core_label_size = int(options["core_label_size"].replace(" ",""))
+core_label_style = str(options["core_label_style"]).replace(" ","").lower() 
+core_label_colour = str(options["core_label_colour"]).replace(" ","").lower() 
+
+core_label_v_adjust = float(options["core_label_v_adjust"].replace(" ",""))
+core_label_h_adjust = float(options["core_label_h_adjust"].replace(" ",""))
                       
 ###############################################################################
 # Obtain colours to use to change incoming numeric information from ########### 
 # parameter file ##############################################################
 ###############################################################################
 colour_dict = colours.col_dict()
+alt_name_dict = colours.alt_ts_name_dict()
+tex_dict = colours.tex_dict()
+
+tex_dict_status = tex_dict[0]
+tex_dict_colour = tex_dict[1]
+
+use_alt_name = options["Use alternative TS name**"].lower().replace(" ","")
+
 colour_rock_list = colours.col_rock_list()
 
 colour_rock_dict_f = colour_rock_list[0]
@@ -486,12 +507,10 @@ speed = "fastest"
 ###############################################################################
 class window_1():
     def __init__(self, master):
-        self.master = master
-        # Obtain user screen width and height and then the pixels per mm
-        for monitor in get_monitors():
-            screen_width_1 = int(monitor.width)
-            screen_height_1 = int(monitor.height)
-            pixels_mm = screen_width_1 / monitor.width_mm
+        self.master = master        
+        screen_width = (master.winfo_screenwidth())
+        screen_width_mm = (master.winfo_screenmmwidth())
+        pixels_mm = screen_width / screen_width_mm
         
         #######################################################################
         # Obtain size in pixels of canvas area from size in mm nominated in ###
@@ -545,18 +564,210 @@ class window_1():
         screen.tracer(0)
         
         #######################################################################
+        def silt_shapes (hi,wid,sym_col):
+            dave.pencolor("black")
+
+            hi_inc = wid*0.1
+            wid_inc = wid*0.4
+            shape_wid = wid*0.3
+            shape_hi = wid*0.2
+            
+            dave.penup()
+            dave.setheading(270)
+            dave.forward(hi)
+            pos_lowest_y = dave.pos()
+            dave.setheading(90)
+            dave.forward(hi)
+            
+            dave.setheading(0)
+            dave.forward(wid_inc)
+           
+            for x in range(0,100):
+                dave.penup()
+                dave.pensize(1)
+                
+                dave.setheading(270)
+                if x > 0:
+                    dave.forward(hi_inc*4)
+                else:
+                    dave.forward(hi_inc)
+                
+                pos_inc_start = dave.pos()
+                
+                dave.penup()
+                dave.forward(shape_hi)
+                end_point = dave.pos()
+                dave.setheading(90)
+                dave.forward(shape_hi)
+                dave.setheading(270)
+                
+                if end_point[1]  > pos_lowest_y[1]:
+                    dave.pendown()
+                    dave.pencolor(sym_col)
+                    dave.forward(shape_hi)
+                    
+                    dave.setheading(0)
+                    
+                    dave.forward(shape_wid)
+                    dave.pensize(1)
+                    dave.penup()
+                    
+                    dave.setheading(180)
+                    dave.forward(shape_wid)
+                else:
+                    break
+                
+            dave.pensize(1)
+        
+        #######################################################################    
+        def sand_shapes (hi,wid,sym_col):
+            dave.pencolor("black")
+        
+            hi_inc = wid*0.1
+            wid_inc = wid*0.4
+            shape_hi = wid*0.15
+            
+            dave.penup()
+            dave.setheading(270)
+            dave.forward(hi)
+            pos_lowest_y = dave.pos()
+            dave.setheading(90)
+            dave.forward(hi)
+
+            dave.setheading(0)
+            dave.forward(wid_inc*1.25)
+                      
+            for x in range(0,100):
+                dave.penup()
+                dave.pensize(1)
+                
+                dave.setheading(270)
+                
+                if x > 0:
+                    dave.forward(hi_inc*4)
+                else:
+                    dave.forward(hi_inc)
+                    
+                pos_inc_start = dave.pos()
+                
+                dave.penup()
+                dave.forward(shape_hi)
+                end_point = dave.pos()
+                dave.setheading(90)
+                dave.forward(shape_hi)
+                dave.setheading(270)
+                
+                if end_point[1]  > pos_lowest_y[1]:
+                    dave.pendown()
+                    dave.pencolor(sym_col)
+                    dave.fillcolor(sym_col)
+                    dave.begin_fill()
+                    dave.circle(1)
+                    dave.end_fill()
+                    dave.penup()
+                    dave.forward(shape_hi)
+                else:
+                    break
+                
+            dave.pensize(1)
+
+        #######################################################################    
+        def gravel_shapes (hi,wid,sym_col):
+            dave.pencolor("black")
+        
+            hi_inc = wid*0.15
+            wid_inc = wid*0.4
+            shape_hi = wid*0.15
+            
+            dave.penup()
+            dave.setheading(270)
+            dave.forward(hi)
+            pos_lowest_y = dave.pos()
+            dave.setheading(90)
+            dave.forward(hi)
+
+            dave.setheading(0)
+            dave.forward(wid_inc)
+                      
+            for x in range(0,100):
+                dave.penup()
+                dave.pensize(1)
+                
+                dave.setheading(270)
+                
+                if x > 0:
+                    dave.forward(hi_inc*4)
+                else:
+                    dave.forward(hi_inc*1.5)
+                
+                dave.penup()
+                dave.forward(shape_hi)
+                end_point = dave.pos()
+                dave.setheading(90)
+                dave.forward(shape_hi)
+                dave.setheading(270)
+                
+                if end_point[1]  > pos_lowest_y[1]:
+                    dave.pendown()
+                    dave.pencolor(sym_col)
+
+                    dave.circle((wid/6))
+                    dave.penup()
+                    dave.forward(shape_hi)               
+                else:
+                    break
+                
+            dave.pensize(1)
+
+        #######################################################################
         # Function used to draw out each section of core with four rectangular#
         # troels smith units inside. ##########################################
         #######################################################################
-        def rectangle(col,
+        def rectangle(name,
+                      col,
                       wid,
                       hi,
                       x,
-                      y):
-        
+                      y,
+                      unrec,
+                      section_num,
+                      core_num,
+                      core_labels):
+            
+            same_col = "False"
+            
+            if remove_seg == "on":
+                unique_names = set(name)
+                if  len(unique_names) == 1 and unique_names !="Ur":
+                    same_col = "True"
+                else:
+                    same_col = "False"
+                    
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
+            dave.penup() 
+            dave.setpos(x+shift,y)
+            dave.setheading(90)
+
+            dave.forward(core_label_v_adjust*pixels_mm)
+            dave.setheading(0)
+            dave.forward(core_label_h_adjust*pixels_mm)
+                
+            dave.pendown()
+            
+            ###################################################################
+            
+            if core_label_on_off == "on":
+                if section_num == 0:
+                    dave.pencolor(core_label_colour)
+                    dave.write(core_labels[str(float(core_num+1))],
+                               move=False,
+                               align="left",
+                               font=("Arial",
+                                     core_label_size,
+                                     core_label_style))
+                
             dave.penup() 
             dave.setpos(x+shift,y)
             dave.pendown()
@@ -567,21 +778,35 @@ class window_1():
                 dave.pencolor(pen_colour_rect)
             except:
                 ge("Line colour")
-
-            try:
                 
+            try:
                 dave.fillcolor(col[0])
             except:
                  ge("TS colour entry")
+                 
             ###################################################################
             dave.begin_fill()
+            dave.pencolor(pen_colour_rect)
+
             dave.setheading(0)
-            dave.forward(wid) 
+            dave.forward(wid)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+                                
             dave.setheading(270)
             dave.forward(hi)
+            dave.pencolor(pen_colour_rect)
             dave.setheading(180)
             dave.forward(wid)  
-            dave.setheading(90)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+                
+            if same_col == "True":
+                dave.pencolor(col[0])
+                
+            dave.setheading(90)            
             dave.forward(hi) 
             dave.end_fill()
             dave.speed(f"{speed}")
@@ -589,12 +814,48 @@ class window_1():
             dave.pensize(1)
             dave.penup() 
             dave.setpos(x+shift,y)
-            dave.pendown()
+            
+            if name[0] == "Ag" or name[0] == "As":
+                if name[0] == "Ag":
+                    if tex_dict_status["Argilla granosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla granosa tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                               
+                if name[0] == "As":
+                    if tex_dict_status["Argilla steatodes tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla steatodes tex**"]
+                        silt_shapes(hi,wid,sym_col)
+            
+            if name[0] == "Gg(min)" or name[0] == "Gg(maj)":
+                
+                if name[0] == "Gg(min)":
+                    if tex_dict_status["Grana glareosa minora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa minora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                               
+                if name[0] == "Gg(maj)":
+                    if tex_dict_status["Grana glareosa majora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa majora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                
+            if name[0] == "Ga" or name[0] == "Gs":
+                if name[0] == "Ga":
+                    if tex_dict_status["Grana arenosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana arenosa tex**"]
+                        sand_shapes(hi,wid,sym_col)
+                               
+                if name[0] == "Gs":
+                    if tex_dict_status["Grana saburralia tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana saburralia tex**"]
+                        sand_shapes(hi,wid,sym_col)
+                
+            dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid)+shift,y)
             dave.pendown()
-            dave.pencolor(pen_colour_rect)
             
+
+            dave.pencolor(pen_colour_rect)
             ###################################################################
             #Error check entries
             try:
@@ -605,12 +866,30 @@ class window_1():
             ###################################################################
             dave.begin_fill()
             dave.setheading(0)
+            dave.pencolor(pen_colour_rect)
             dave.forward(wid) 
             dave.setheading(270)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            
+            if same_col == "True":
+                dave.pencolor(col[0])
+        
             dave.forward(hi)
+            
             dave.setheading(180)
-            dave.forward(wid)  
+            dave.pencolor(pen_colour_rect)
+            dave.forward(wid) 
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+                
+            if same_col == "True":
+                dave.pencolor(col[0])
+                
             dave.setheading(90)
+            
             dave.forward(hi) 
             dave.end_fill()
             dave.speed(f"{speed}")
@@ -618,10 +897,52 @@ class window_1():
             dave.pensize(1)
             dave.penup() 
             dave.setpos((x-wid)+shift,y)
+            
+            if name[1] == "Ag" or name[1] == "As":
+                if name[1] == "Ag":
+                    if tex_dict_status["Argilla granosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla granosa tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                               
+                if name[1] == "As":
+                    if tex_dict_status["Argilla steatodes tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla steatodes tex**"]
+                        silt_shapes(hi,wid,sym_col)
+
+            if name[1] == "Gg(min)" or name[1] == "Gg(maj)":
+                if name[1] == "Gg(min)":
+                    if tex_dict_status["Grana glareosa minora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa minora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                               
+                if name[1] == "Gg(maj)":
+                    if tex_dict_status["Grana glareosa majora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa majora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                
+            if name[1] == "Ga" or name[1] == "Gs":
+                if name[1] == "Ga":
+                    if tex_dict_status["Grana arenosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana arenosa tex**"]
+                        sand_shapes(hi,wid,sym_col)
+                               
+                if name[1] == "Gs":
+                    if tex_dict_status["Grana saburralia tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana saburralia tex**"]
+                        sand_shapes(hi,wid,sym_col)
+
+             
+            dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid*2)+shift,y)
             dave.pendown()
-            dave.pencolor(pen_colour_rect)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            elif same_col == "True":
+                dave.pencolor(col[0])
+            else:
+                dave.pencolor(pen_colour_rect)
             
             ###################################################################
             #Error check entries
@@ -632,12 +953,32 @@ class window_1():
             
             ###################################################################
             dave.begin_fill()
+            dave.pencolor(pen_colour_rect)
             dave.setheading(0)
             dave.forward(wid) 
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            elif same_col == "True":
+                dave.pencolor(col[0])
+            else:
+                dave.pencolor(pen_colour_rect)
+            
             dave.setheading(270)
             dave.forward(hi)
+            
+            dave.pencolor(pen_colour_rect)
             dave.setheading(180)
-            dave.forward(wid)  
+            
+            dave.forward(wid)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            elif same_col == "True":
+                dave.pencolor(col[0])
+            else:
+                dave.pencolor(pen_colour_rect)
+                
             dave.setheading(90)
             dave.forward(hi) 
             dave.end_fill()
@@ -646,10 +987,52 @@ class window_1():
             dave.pensize(1)
             dave.penup() 
             dave.setpos((x-wid*2)+shift,y)
+            
+            if name[2] == "Ag" or name[2] == "As":
+                if name[2] == "Ag":
+                    if tex_dict_status["Argilla granosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla granosa tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                              
+                if name[2] == "As":
+                    if tex_dict_status["Argilla steatodes tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla steatodes tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                        
+            if name[2] == "Gg(min)" or name[2] == "Gg(maj)":
+                if name[2] == "Gg(min)":
+                    if tex_dict_status["Grana glareosa minora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa minora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                               
+                if name[2] == "Gg(maj)":
+                    if tex_dict_status["Grana glareosa majora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa majora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                        
+            if name[2] == "Ga" or name[2] == "Gs":
+                if name[2] == "Ga":
+                    if tex_dict_status["Grana arenosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana arenosa tex**"]
+                        sand_shapes(hi,wid,sym_col)
+                               
+                if name[2] == "Gs":
+                    if tex_dict_status["Grana saburralia tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana saburralia tex**"]
+                        sand_shapes(hi,wid,sym_col)
+
+            
+            dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid*3)+shift,y)
             dave.pendown()
-            dave.pencolor(pen_colour_rect)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            elif same_col == "True":
+                dave.pencolor(col[0])
+            else:
+                dave.pencolor(pen_colour_rect)
             
             ###################################################################
             #Error check entries
@@ -662,22 +1045,98 @@ class window_1():
             dave.begin_fill()
             dave.setheading(0)
             dave.forward(wid) 
+            
             dave.setheading(270)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            elif same_col == "True":
+                dave.pencolor(col[0])
+            else:
+                dave.pencolor(pen_colour_rect)
+            
             dave.forward(hi)
+            
             dave.setheading(180)
-            dave.forward(wid)  
+            dave.pencolor(pen_colour_rect)
+            dave.forward(wid) 
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+                dave.setheading(0)
+                dave.forward(wid*4)
+                dave.penup()
+                dave.setheading(180)
+                dave.forward(wid*4)
+
+            dave.pendown()
+  
             dave.setheading(90)
+            
+            if unrec == "yes":
+                dave.pencolor("white")
+            else:
+                dave.pencolor(pen_colour_rect)
+                
+
             dave.forward(hi) 
             dave.end_fill()
+            
+            if unrec == "yes" or same_col == "True" :
+                dave.pendown()
+                dave.pencolor(pen_colour_rect)
+                dave.setheading(0)
+                dave.forward(wid*4)
+                dave.penup()
+                dave.setheading(180)
+                dave.forward(wid*4)
+                
+            
+                
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
             dave.penup() 
             dave.setpos((x-wid*3)+shift,y)
+            
+            if name[3] == "Ag" or name[3] == "As":
+                if name[3] == "Ag":
+                    if tex_dict_status["Argilla granosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla granosa tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                               
+                if name[3] == "As":
+                    if tex_dict_status["Argilla steatodes tex**"] == "on":
+                        sym_col = tex_dict_colour["Argilla steatodes tex**"]
+                        silt_shapes(hi,wid,sym_col)
+                        
+            if name[3] == "Gg(min)" or name[3] == "Gg(maj)":
+                if name[3] == "Gg(min)":
+                    if tex_dict_status["Grana glareosa minora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa minora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+                               
+                if name[3] == "Gg(maj)":
+                    if tex_dict_status["Grana glareosa majora tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana glareosa majora tex**"]
+                        gravel_shapes(hi,wid,sym_col)
+
+            if name[3] == "Ga" or name[3] == "Gs":
+                if name[3] == "Ga":
+                    if tex_dict_status["Grana arenosa tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana arenosa tex**"]
+                        sand_shapes(hi,wid,sym_col)
+                               
+                if name[3] == "Gs":
+                    if tex_dict_status["Grana saburralia tex**"] == "on":
+                        sym_col = tex_dict_colour["Grana saburralia tex**"]
+                        sand_shapes(hi,wid,sym_col)
+            
+            dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.hideturtle()
             dave.setpos(x,y-hi)
-    
+
         #######################################################################
         # Function draws a large simple rectangle of entire width of core and #
         # to the depth defined by the hi variable for geology##################
@@ -961,11 +1420,11 @@ class window_1():
                        legend = "off"):
             
             ###################################################################
-            inc = wid_x/2 #1.5
-            big_dash_len = wid_x/1.5#2
-            small_dash_len = wid_x/3 #0.5
-            gap = wid_x/4 #1
-            stagger_space = wid_x/1.5 #2
+            inc = wid_x/2 
+            big_dash_len = wid_x/1.5
+            small_dash_len = wid_x/3
+            gap = wid_x/4
+            stagger_space = wid_x/1.5
             
             ###################################################################
             if legend == "on":
@@ -2084,7 +2543,7 @@ class window_1():
                       main_title,
                       main_title_size,
                       main_title_style,
-                      main_title_v_adj,
+                       main_title_v_adj,
                       main_title_h_adj):
             
             dave.setpos(x,y)
@@ -2238,8 +2697,11 @@ class window_1():
                    leg_height,
                    col,
                    label,
+                   label_2,
                    legend_x,
                    legend_y,
+                   tex_status,
+                   tex_colour,
                    leg_sty,
                    leg_label_v_adj = 0,
                    leg_label_h_adj = 0,
@@ -2277,6 +2739,91 @@ class window_1():
             dave.forward(leg_wid)
             dave.end_fill()
             dave.penup()
+            
+            temp_pos = dave.pos()
+            
+            ###################################################################        
+            if label == "Argilla granosa**" or \
+                label == "Argilla steatodes**":
+                        
+                if tex_status["Argilla steatodes tex**"] == "on":
+                    dave.pencolor(tex_colour["Argilla steatodes tex**"])
+                    
+
+                if tex_status["Argilla granosa tex**"] == "on":
+                    dave.pencolor(tex_colour["Argilla granosa tex**"])   
+
+                if tex_status["Argilla steatodes tex**"] == "on" or \
+                    tex_status["Argilla granosa tex**"] == "on":  
+                        
+                    dave.pensize(2)
+                    dave.setheading(270)
+                    dave.forward(leg_height*0.4)
+                    dave.setheading(0)
+                    dave.forward(leg_wid*0.5)
+                    dave.pendown()
+                    dave.setheading(270)
+                    
+                    dave.forward(leg_height*0.2)
+                    dave.setheading(0)
+                    dave.forward(leg_height*0.2)
+                    dave.penup()
+                
+            ###############################################################
+            if label == "Grana glareosa minora**" or \
+                label == "Grana glareosa majora**":
+
+                if tex_status["Grana glareosa minora tex**"] == "on":   
+                    dave.pencolor(tex_colour["Grana glareosa minora tex**"])
+                        
+                if tex_status["Grana glareosa majora tex**"] == "on":  
+                    dave.pencolor(tex_colour["Grana glareosa majora tex**"])
+                    
+                if tex_status["Grana glareosa minora tex**"] == "on" or \
+                    tex_status["Grana glareosa majora tex**"] == "on":
+                        
+                    dave.pensize(1)
+                    dave.setheading(270)
+                    dave.forward(leg_height*0.6)
+                    dave.setheading(0)
+                    dave.forward(leg_wid*0.5)
+                    dave.pendown()
+                    
+                    dave.circle((leg_wid/10))
+                    dave.penup()
+                
+            ###############################################################    
+            if label == "Grana arenosa**" or label == "Grana saburralia**":
+                
+                if tex_status["Grana arenosa tex**"] == "on":
+                    dave.pencolor(tex_colour["Grana arenosa tex**"])
+                    fill_col = tex_colour["Grana arenosa tex**"]
+                    
+                if tex_status["Grana saburralia tex**"] == "on":  
+                    dave.pencolor(tex_colour["Grana saburralia tex**"])
+                    fill_col = tex_colour["Grana saburralia tex**"]
+                     
+                if tex_status["Grana arenosa tex**"] == "on" or \
+                    tex_status["Grana saburralia tex**"] == "on":
+
+                    dave.pensize(1)
+                    dave.setheading(270)
+                    dave.forward(leg_height*0.6)
+                    dave.setheading(0)
+                    dave.forward(leg_wid*0.5)
+                    dave.pendown()
+                    
+                    dave.begin_fill()
+                    dave.fillcolor(fill_col)
+                    
+                    dave.circle(leg_wid/20)
+                    dave.end_fill()
+                    dave.penup()
+        
+            ###################################################################
+            dave.setposition(temp_pos)   
+            dave.pensize(1)    
+            
             dave.setheading(0)
             dave.forward(leg_wid+5*pixels_mm)
             dave.setheading(270)
@@ -2288,8 +2835,12 @@ class window_1():
             dave.pendown()
             dave.pencolor(legend_txt_col)
             
+            ###################################################################
             if leg_sty == "italic":
-                style = ('Arial',legend_font_size,'italic')
+                if label == "Unrecovered**":
+                    style = ('Arial',legend_font_size,'normal')
+                else:
+                    style = ('Arial',legend_font_size,'italic')
             if leg_sty == "normal":
                 style = ('Arial',legend_font_size)
             if leg_sty == "bold":
@@ -2299,6 +2850,7 @@ class window_1():
                        move=False,
                        align="left",
                        font=(style))
+            
             dave.penup()
             
         ####################################################################### 
@@ -2420,9 +2972,15 @@ class window_1():
         #######################################################################
         # Run all required pre drawing functions for main parts of cores ######
         #######################################################################
+        core_labels = colours.core_label("Core_number_label",
+                                         "Core_label")
+        
         data_colour = colours.data_colour("Core_number",
                                           "TS_description",
                                           colour_dict)
+        
+        data_name = colours.data_name("Core_number",
+                                      "TS_description")
         
         data_vp_colour = colours.vp_colours("Core_number",
                                             "von_Post",
@@ -2592,19 +3150,43 @@ class window_1():
         #######################################################################
         if options["legend_on_off**"]  == "on":
             
-            for i, (key,col) in enumerate(reversed(colour_dict.items())):
-                legend(x_y_cross[0],
-                       x_y_cross[1] + ((leg_section_height*pixels_mm)*i+1),
-                       leg_section_width*pixels_mm,
-                       leg_section_height*pixels_mm,  
-                       col,
-                       key,
-                       legend_x,
-                       legend_y,
-                       legend_font_style,
-                       leg_label_v_adjust,
-                       leg_label_h_adjust,
-                       legend_txt_col)
+            if use_alt_name == "on": 
+            
+                for i, ((key_1,col), (key_2,name)) in \
+                        enumerate(zip(reversed(colour_dict.items()),
+                        reversed(alt_name_dict.items()))):
+                    legend(x_y_cross[0],
+                           x_y_cross[1] + ((leg_section_height*pixels_mm)*i+1),
+                           leg_section_width*pixels_mm,
+                           leg_section_height*pixels_mm,  
+                           col,
+                           name,
+                           key_2,
+                           legend_x,
+                           legend_y,
+                           tex_dict_status,
+                           tex_dict_colour,
+                           legend_font_style,
+                           leg_label_v_adjust,
+                           leg_label_h_adjust,
+                           legend_txt_col)
+            else:
+                for i, (key,col) in enumerate(reversed(colour_dict.items())):
+                    legend(x_y_cross[0],
+                           x_y_cross[1] + ((leg_section_height*pixels_mm)*i+1),
+                           leg_section_width*pixels_mm,
+                           leg_section_height*pixels_mm,  
+                           col,
+                           key,
+                           key,
+                           legend_x,
+                           legend_y,
+                           tex_dict_status,
+                           tex_dict_colour,
+                           legend_font_style,
+                           leg_label_v_adjust,
+                           leg_label_h_adjust,
+                           legend_txt_col)
             
             ###################################################################
             #Add legend title if required #####################################
@@ -2635,8 +3217,11 @@ class window_1():
                        leg_section_height_vp*pixels_mm,  
                        col,
                        key,
+                       key,
                        legend_x_vp,
                        legend_y_vp,
+                       tex_dict_status,
+                       tex_dict_colour,
                        legend_font_style_vp,
                        leg_label_v_adjust_vp,
                        leg_label_h_adjust_vp,
@@ -2839,12 +3424,26 @@ class window_1():
                 ###############################################################
                 # Draw out Troels Smith rectangles ############################
                 ###############################################################
-                if geo[x] [t] == "TS":
-                    rectangle(data_colour[x][t],
+                if geo[x] [t] == "TS" or geo[x] [t] == "UR" or \
+                    geo[x] [t] == "TS_all" :
+                    if geo[x] [t] == "UR" or geo[x] [t] == "TS_all":
+                        unrec = "yes"
+                    else:
+                        unrec = "no" 
+                        
+                    core_num = x   
+                    
+                    rectangle(data_name[x][t],
+                              data_colour[x][t],
                               wid,
                               all_diffs_cores[x][t]*pixels_mm,
                               x_lens_adjust[x],
-                              y2_co)
+                              y2_co,
+                              unrec,
+                              t,
+                              core_num,
+                              core_labels)
+                    
                     y2_co = y2_co - all_diffs_cores[x][t]*pixels_mm
                 
                 ###############################################################
@@ -3103,6 +3702,8 @@ class window_1():
         # can then save that as pdf or whatever. png and jpg options offered ##
         # here though #########################################################
         #######################################################################
+        EpsImagePlugin.gs_windows_binary =  r"C:\Program Files\gs\gs10.05.0\bin\gswin64c"
+        ts = dave.getscreen().getcanvas()
         ts = dave.getscreen().getcanvas()
         ts.postscript(file= f"{output}.eps")
         

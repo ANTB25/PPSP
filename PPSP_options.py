@@ -3,7 +3,7 @@
 """ Module is used via a series of functions to error check and obtain the 
     options the user has decided on from the parameter file.
     
-    This program is free software: you can redistribute it and/or modify
+     This program is free software: you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation, either version 3 of the License, or
      (at your option) any later version.
@@ -39,9 +39,9 @@ if user_agreement != "":
     
 ###############################################################################
 # Code to take file name, location and program name from the cmd line #########
-# If using this code in an IDE comment out the code between lines 33 - 40 and #
-# un comment lines 42-43 and edit parameter location (location_1) and #########
-# provide a file name with .csv extention for parameter file in line 43 #######
+# If using this code in an IDE comment out the code between lines 46 - 53 and #
+# uncomment lines 55-56 and edit parameter location (location_1) and #########
+# provide a file name with .csv extention for parameter file in line 56 #######
 ###############################################################################
 parser = argparse.ArgumentParser(description = \
                             "Options file name and location" )
@@ -132,6 +132,7 @@ def option_sort():
                  
                  ##############################################################
                  "line_colour**",
+                 "Remove segments**",
                 
                  ##############################################################
                  "Argilla steatodes**",
@@ -155,7 +156,40 @@ def option_sort():
                  "Turfa bryophitica**",
                  "Turfa herbosa**",
                  "Turfa lignosa**",
-                
+                 "Unrecovered**",
+                 
+                 "Use alternative TS name**",
+                 
+                 "Argilla granosa alt**",
+                 "Argilla steatodes alt**",
+                 "Grana arenosa alt**",
+                 "Grana glareosa majora alt**",
+                 "Grana glareosa minora alt**",
+                 "Grana saburralia alt**",
+                 
+                 "Detritus granosus alt**",
+                 "Detritus herbosus alt**",
+                 "Detritus lignosus alt**",
+                 
+                 "Limus calcareus alt**",
+                 "Limus detrituosus alt**",
+                 "Limus ferrugineus alt**",
+                 
+                 "Particulae testae molloscorum alt**",
+                 
+                 "Substantia humosa alt**",
+                 "Turfa bryophitica alt**",
+                 "Turfa herbosa alt**",
+                 "Turfa lignosa alt**"
+                 "Unrecovered alt**",
+                 
+                 "Argilla steatodes tex**",
+                 "Argilla granosa tex**",
+                 "Grana arenosa tex**",
+                 "Grana saburralia tex**",
+                 "Grana glareosa minora tex**",
+                 "Grana glareosa majora tex**"
+
                  ##############################################################
                  "legend_on_off**",
                  
@@ -225,7 +259,12 @@ def option_sort():
                  "other_on_off**",
 
                  "other_colour",
-                 "other_line_colour"]
+                 "other_line_colour",
+                 
+                 "core_label_on_off",
+                 "core_label_style",
+                 "core_label_style",
+                 "core_label_colour"]
                  
     ###########################################################################
     num_list = ["canvas_width_mm**",
@@ -347,7 +386,11 @@ def option_sort():
                 "gap_between_TS_and_charcoal",
                 
                 "other_width",
-                "gap_between_TS_and_other"]
+                "gap_between_TS_and_other",
+                
+                "core_label_size",
+                "core_label_v_adjust",
+                "core_label_h_adjust"]
 
     ###########################################################################
     # Try to open TS_options.csv ##############################################
@@ -376,6 +419,7 @@ def option_sort():
                       "CORE JOINING LINE",
                       "TROELS SMITH",
                       "Nomenclature",
+                      "Use Pattern",
                       "TROELS SMITH LEGEND",
                       "VON POST",
                       "Humification levels",
@@ -384,7 +428,8 @@ def option_sort():
                       "Geology or basal sediment",
                       "GEOLOGY/BASAL SEDIMENT LEGEND",
                       "CHARCOAL",
-                      "OTHER"])
+                      "OTHER",
+                      "CORE LABELS"])
     
     data = data.reset_index()
     
@@ -674,6 +719,12 @@ def option_sort():
                   "other_colour",
                   "other_line_colour",
                   "gap_between_TS_and_other"]
+    
+    core_label_list = ["core_label_size",
+                       "core_label_style",
+                       "core_label_colour",
+                       "core_label_v_adjust",
+                       "core_label_h_adjust"]
                   
     
     if options_dict["charcoal_on_off**"] == "on":
@@ -691,6 +742,14 @@ def option_sort():
                     print(f"****** The {k} option does not have an entry."
                           "Please provide an entry. ******")
                     sys.exit() 
+                    
+    if options_dict["core_label_on_off**"] == "on":
+        for k,v in options_dict.items():
+            if k in core_label_list:
+                if v =="" or pd.isnull(v):
+                    print(f"****** The {k} option does not have an entry."
+                          "Please provide an entry. ******")
+                    sys.exit()                 
 
     ###########################################################################
     # If von post has been requested check parameters have been provided ######

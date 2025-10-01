@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""Module to obtain the colours required for the Troels Smith, von Post, geology
-and 'other' parts of the cores in the main figure
+"""Module to obtain the colours required for the Troels Smith, von Post,
+   geology and 'other' parts of the cores in the main figure.
 
-   This program is free software: you can redistribute it and/or modify
+    This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
@@ -59,7 +59,8 @@ def col_dict():
                "Substantia humosa**",
                "Turfa bryophitica**",
                "Turfa herbosa**",
-               "Turfa lignosa**"]
+               "Turfa lignosa**",
+               "Unrecovered**"]
     
     rem = "-n"
     
@@ -69,6 +70,40 @@ def col_dict():
                    if rem not in v.strip()}
 
     return colour_dict
+
+###############################################################################
+#Function to create a dictionary of the alternative names the user may want ###
+#instead of the default ones from the TS scheme ###############################
+###############################################################################
+def alt_ts_name_dict():
+    ts_list = ["Argilla granosa alt**",
+               "Argilla steatodes alt**",
+               "Detritus granosus alt**",
+               "Detritus herbosus alt**",
+               "Detritus lignosus alt**",
+               "Grana arenosa alt**",
+               "Grana glareosa majora alt**",
+               "Grana glareosa minora alt**",
+               "Grana saburralia alt**",
+               "Limus calcareus alt**",
+               "Limus detrituosus alt**",
+               "Limus ferrugineus alt**",
+               "Particulae testae molloscorum alt**",
+               "Substantia humosa alt**",
+               "Turfa bryophitica alt**",
+               "Turfa herbosa alt**",
+               "Turfa lignosa alt**",
+               "Unrecovered alt**"]
+    
+    rem = "-n"
+    
+    alt_name_dict = {k:v for k,v in options.items()
+                   if k in ts_list}
+    alt_name_dict = {k:v for k,v in alt_name_dict.items()
+                   if rem not in v}
+
+    return alt_name_dict
+
 
 ###############################################################################
 # Function to obtain the colours used for the geology elements of the #########
@@ -148,7 +183,7 @@ def data_colour(core_column,
         data_core_cols = []
         section = data.groupby(f"{core_column}")
         try:
-            for name, group in section:                    
+            for name, group in section:                 
                 section_colours = [x for x in group[f"{col_column}"]]
                 section_colours = [x.split("-") for x in section_colours]
                 section_colours = [list(reversed(x))for x in section_colours]
@@ -206,32 +241,93 @@ def data_colour(core_column,
                 section_colours = [[colour_dict["Turfa lignosa**"]
                                   if y.lower() == "tl" else y for y in x] 
                                   for x in section_colours]
+                section_colours = [[colour_dict["Unrecovered**"]
+                                  if y.lower() == "ur" else y for y in x] 
+                                  for x in section_colours]
                 
                 data_core_cols.append(section_colours)  
 
         except:
-            print("Problem encoutered in data file. Make sure there are"
+            print("\nProblem encoutered in data file. Make sure there are"
                   " no empty\nentries in the TS_description column."
                   " If there are at the base\nof the cores fill them in "
-                  "with 0-0-0-0")
+                  "with 0-0-0-0.\n\nAlso check '-n' entries are correct for "
+                  "TS data in parameter file")
             sys.exit()
+            
 
     return data_core_cols
+ 
+###############################################################################
+# Look at supplied data input csv file and load in and convert colours from ###
+# numbers to text for each part of the Troels Smith sections for each core. ###
+# Create a nested list ########################################################
+###############################################################################
+def data_name(core_column,
+              col_column):  
     
+    with open (f"{file_name}.csv") as file:
+        data = pd.read_csv(file)
+        data_core_names = []
+        section = data.groupby(f"{core_column}")
+        try:
+            for name, group in section:                    
+                section_names = [x for x in group[f"{col_column}"]]
+                section_names = [x.split("-") for x in section_names]
+                
+                section_names = [list(reversed(x))for x in section_names]
+
+                data_core_names.append(section_names)  
+
+        except:
+            print("\nProblem encoutered in data file. Make sure there are"
+                  " no empty\nentries in the TS_description column."
+                  " If there are at the base\nof the cores fill them in "
+                  "with 0-0-0-0.\n\nAlso check '-n' entries are correct for "
+                  "TS data in parameter file")
+            sys.exit()
+
+    return data_core_names
+
+###############################################################################
+# As above but does not split the entries of foreground and background colour #
+# and the name. All together in a single dictionary ###########################
+###############################################################################
+def tex_dict(): 
+    
+    tex_dict_list = []
+    tex_list = ["Argilla steatodes tex**",
+                "Argilla granosa tex**",
+                "Grana arenosa tex**",
+                "Grana saburralia tex**",
+                "Grana glareosa minora tex**",
+                "Grana glareosa majora tex**"]
+    
+    tex_status_dict = {k:v.replace(" ","").split("*")[0]
+                          for k,v in options.items() if k in tex_list}
+    
+    tex_colour_dict = {k:v.replace(" ","").split("*")[1]
+                          for k,v in options.items() if k in tex_list}
+
+    tex_dict_list.append(tex_status_dict)
+    tex_dict_list.append(tex_colour_dict)
+
+    return tex_dict_list
+
 ###############################################################################
 # Create a dictionary for the colours provided for each von Post value ########
 ###############################################################################
 def vp_col_dict():
     
-    vp_list = ["H01",
-               "H02",
-               "H03",
-               "H04",
-               "H05",
-               "H06",
-               "H07",
-               "H08",
-               "H09",
+    vp_list = ["H1",
+               "H2",
+               "H3",
+               "H4",
+               "H5",
+               "H6",
+               "H7",
+               "H8",
+               "H9",
                "H10",
                "N_A"]
     
@@ -257,23 +353,23 @@ def vp_colours(core_column,
 
         for name, group in section:
             vp_colours = [x for x in group[f"{col_column}"]]
-            vp_colours = [colour_vp_dict["H01"] if x == 1 
+            vp_colours = [colour_vp_dict["H1"] if x == 1 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H02"] if x == 2 
+            vp_colours = [colour_vp_dict["H2"] if x == 2 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H03"] if x == 3 
+            vp_colours = [colour_vp_dict["H3"] if x == 3 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H04"] if x == 4 
+            vp_colours = [colour_vp_dict["H4"] if x == 4 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H05"] if x == 5 
+            vp_colours = [colour_vp_dict["H5"] if x == 5 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H06"] if x == 6 
+            vp_colours = [colour_vp_dict["H6"] if x == 6 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H07"] if x == 7 
+            vp_colours = [colour_vp_dict["H7"] if x == 7 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H08"] if x == 8 
+            vp_colours = [colour_vp_dict["H8"] if x == 8 
                           else x for x in vp_colours]
-            vp_colours = [colour_vp_dict["H09"] if x == 9 
+            vp_colours = [colour_vp_dict["H9"] if x == 9 
                           else x for x in vp_colours]
             vp_colours = [colour_vp_dict["H10"] if x == 10 
                           else x for x in vp_colours]
@@ -324,6 +420,21 @@ def other_colour(core_num,
             
     return other_core_cols 
 
+###############################################################################
+#Core label ###################################################################
+###############################################################################
+def core_label(core_column,
+               lab_column):
+    
+    with open (f"{file_name}.csv") as file:
+         data = pd.read_csv(file)
+         data_core_labs = [] 
+         
+         labels_dict = {k:v for k,v in zip(data[f"{core_column}"].astype(str),
+                                           data[f"{lab_column}"]) 
+                        if str(k).strip() != "" and str(k) != "nan"}
+         
+    return labels_dict 
 ###############################################################################
 ###############################################################################
 ###############################################################################
