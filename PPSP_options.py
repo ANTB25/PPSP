@@ -132,6 +132,8 @@ def option_sort():
                  
                  ##############################################################
                  "line_colour**",
+                 "unrecovered_line_on_off**",
+                 "unrecovered_line_colour**",
                  "Remove segments**",
                 
                  ##############################################################
@@ -453,10 +455,12 @@ def option_sort():
     ###########################################################################
     for k,v in ess_options_dict.items():
         if str(v).strip() == "" or str(v) == "nan":
-
-            print(f"******The {k} option has no entry. "
-                  "Please provide an entry.******")
-            sys.exit() 
+            if k == "Unrecovered alt**":
+                continue
+            else:
+                print(f"******The {k} option has no entry. "
+                      "Please provide an entry.******")
+                sys.exit() 
 
     for k,v in ess_options_dict_num.items():
         if str(v).replace(" ","").replace("-","").replace(".","").\

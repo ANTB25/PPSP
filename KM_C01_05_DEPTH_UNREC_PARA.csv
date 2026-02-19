@@ -1,9 +1,9 @@
 OPTIONS,USER INPUTS,OPTION INFORMATION
 ,,
 FILES AND DIRECTORY,,
-directory**,G:\\PPSP,Provide an entry for working directory name seperated by \\ at each new subdirectory.
-input_file_name**,KM_C01_05_DEPTH_BW,Provide an entry of the data file (csv fil) name without csv extension.
-output_file_name**,KM_C01_05_DEPTH_BW,Provide an entry name for the stratigraphy output file (outputs are automatically in eps format and can be opened in Inkscape or similar). Do not add any file extensions.
+directory**,F:\\PPSP,Provide an entry for working directory name seperated by \\ at each new subdirectory.
+input_file_name**,KM_C01_05_DEPTH_UNREC,Provide an entry of the data file (csv fil) name without csv extension.
+output_file_name**,KM_C01_05_DEPTH_UNREC,Provide an entry name for the stratigraphy output file (outputs are automatically in eps format and can be opened in Inkscape or similar). Do not add any file extensions.
 image_format**,png,"Provide and entry  for an other output file format.  Options are png, jpeg or 'none' if not required."
 ,,
 ,,
@@ -24,7 +24,7 @@ main_title_v_adjust,15,"Provide an entry for minor vertical adjustment for main 
 main_title_h_adjust,-5,"Provide an entry for minor horizontall adjustment for main title in mm if required. Positive values move upward, negative downward. If no adjustment required provide an entry of 0 (zero)."
 ,,
 ,,
-X AXIS,,
+X AXIS, ,
 x_axis_colour**,black,Provide an entry for X axis line colour (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 x_axis_width**,2,Provide an entry for X axis line width. Entries between 1 and 3 are typical.
 ,,
@@ -120,17 +120,17 @@ ts_width_section**,3,Provide an entry for stratigraphy rectangle width used in t
 line_colour**,black,Provide an entry for Line colour to be used for the rectangles used in the Troels Smith stratigraphy plots (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 unrecovered_line_on_off**,off,For unrecovered sections if they are required the user should say if a bounday line is required or not. Entry of 'on' or 'off' is required.
 unrecovered_line_colour**,black,If the unrecovered_line_on_off** is 'on' a line colour is required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-unrecovered_empty_fill**,off,If an empty fill is required for unrecovered add 'on here. An entry of 'on' or 'off' is required. 
+unrecovered_empty_fill**,on,If an empty fill is required for unrecovered add 'on here. An entry of 'on' or 'off' is required. 
 ,,
 Remove segments**,off,Entry of 'on' or 'off' is required here. This will allow the plotting of non TS like 4 part rectangles if the same entries are supplied such as Tl-Tl-Tl-Tl. See manual for examples. 
 ,,
 Nomenclature,,
 Argilla steatodes**,silver-n,Provide an entry for colour used for Argilla granosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Argilla granosa**,gray,Provide an entry for colour used for Argilla steatodes. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Grana arenosa**,silver-n,Provide an entry for colour used for Detritus granosus. Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Grana saburralia**,gray-n,Provide an entry for colour used for Detritus herbosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Grana glareosa minora**,silver,Provide an entry for colour used for Detritus lignosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Grana glareosa majora**,gray-n,Provide an entry for colour used for Grana arenosa .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana arenosa**,peachpuff-n,Provide an entry for colour used for Detritus granosus. Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana saburralia**,peru-n,Provide an entry for colour used for Detritus herbosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana glareosa minora**,coral,Provide an entry for colour used for Detritus lignosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Grana glareosa majora**,orangered-n,Provide an entry for colour used for Grana arenosa .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Detritus granosus**,crimson-n,Provide an entry for colour used for Grana glareosa majora .Follow with '-n' as part of the associated legend  if not required  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Detritus herbosus**,fuchsia-n,Provide an entry for colour used for  Grana glareosa minora .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Detritus lignosus**,darkviolet-n,Provide an entry for colour used for Grana saburralia .Follow with '-n' if not required as part of the associated legend  (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
@@ -138,42 +138,42 @@ Limus calcareus**,skyblue-n,Provide an entry for colour used for Limus calcareus
 Limus detrituosus**,deepskyblue-n,Provide an entry for colour used for Limus detrituosus .Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Limus ferrugineus**,steelblue-n,Provide an entry for colour used for Limus ferrugineus . Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 Particulae testae molloscorum**,white-n,Provide an entry for colour used for Particulae testae molloscorum . Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Substantia humosa**,black,Provide an entry for colour used for Substantia humosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Turfa bryophitica**,white ,Provide an entry for colour used for Turfa bryophitica. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Turfa herbosa**,lightgray,Provide an entry for colour used for Turfa herbosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Turfa lignosa**,darkgray,Provide an entry for colour used for Turfa lignosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-Unrecovered**,white,Provide an entry for colour used for Unrecovered. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Substantia humosa**,saddlebrown,Provide an entry for colour used for Substantia humosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa bryophitica**,lime,Provide an entry for colour used for Turfa bryophitica. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa herbosa**,yellow,Provide an entry for colour used for Turfa herbosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Turfa lignosa**,darkkhaki,Provide an entry for colour used for Turfa lignosa. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+Unrecovered**,cyan,Provide an entry for colour used for Unrecovered. Follow with '-n' if not required as part of the associated legend (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 ,,
 Use alternative TS name**,off,Provide an entrty of 'on' or 'off'. This allows the user to use a custom label in the TS legend for the component if the latin term is not wanted. 
 ,,
-Argilla steatodes alt**,Clay,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Argilla granosa alt**,Silt,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Grana arenosa alt**,Fine sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Grana saburralia alt**,Medium sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Grana glareosa minora alt**,Coarse sand,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Grana glareosa majora alt**,Gravel,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Detritus granosus alt**,Ligneous and herbceous plants < 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Detritus herbosus alt**,Herbaceous plants > 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Detritus lignosus alt**,Wood / bark > 2 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Limus calcareus alt**,Homo. soil (with Calcium carbonate)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Limus detrituosus alt**,Homo. soil (<0.1 mm)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Limus ferrugineus alt**,Homogeneous soil (with Iron oxides)-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Particulae testae molloscorum alt**,parts of mollusc shells > 0.1 mm-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Substantia humosa alt**,Humus,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Turfa lignosa alt**,Woody peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Turfa herbosa alt**,Herb peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Turfa bryophitica alt**,Moss peat,Supply alternative name if required to the latin normally used in Troels Smith Scheme
-Unrecovered alt**,Not there-n,Supply alternative name if required
+Argilla steatodes alt**,Argilla steatodes-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Argilla granosa alt**,Argilla granosa,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana arenosa alt**,Grana arenosa-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana saburralia alt**,Grana saburralia-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana glareosa minora alt**,Grana glareosa minora,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Grana glareosa majora alt**,Grana glareosa majora,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus granosus alt**,Detritus granosus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus herbosus alt**,Detritus herbosus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Detritus lignosus alt**,Detritus lignosus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus calcareus alt**,Limus calcareus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus detrituosus alt**,Limus detrituosus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Limus ferrugineus alt**,Limus ferrugineus-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Particulae testae molloscorum alt**,Particulae testae molloscorum-n,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Substantia humosa alt**,Substantia humosa,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa lignosa alt**,Turfa bryophitica,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa herbosa alt**,Turfa herbosa,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Turfa bryophitica alt**,Turfa lignosa,Supply alternative name if required to the latin normally used in Troels Smith Scheme
+Unrecovered alt**,no section,Supply alternative name if required
 ,,
 ,,
 Use Pattern,,
 ,,
-Argilla steatodes tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
-Argilla granosa tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
-Grana arenosa tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
-Grana saburralia tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
-Grana glareosa minora tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
-Grana glareosa majora tex**,on*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Argilla steatodes tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Argilla granosa tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana arenosa tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana saburralia tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana glareosa minora tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
+Grana glareosa majora tex**,off*black,If texture is required to the mineral components it can be added here. Supply 'on' or 'off' if required and the colour to use seperated by *. Colours can be can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html
 ,,
 ,,
 TROELS SMITH LEGEND,,
@@ -191,7 +191,7 @@ legend_x_position,330,Provide an entry for legend X position in mm if required.
 legend_y_position,125,Provide an entry for legend Y position in mm if required.
 ,,
 legend_font_size,10,Provide an entry for legend text font size if required.
-legend_font_style,italic,"Provide an entry for legend text style if required. Available options are normal, bold or italic."
+legend_font_style,normal,"Provide an entry for legend text style if required. Available options are normal, bold or italic."
 ,,
 legend_text_colour,black,Provide an entry for legend text colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 ,,
@@ -209,17 +209,17 @@ vp_width_section,4,Provide an entry for von Post rectangle width if required . P
 gap_between_TS_and_vp,2,Provide an entry for gap in mm between von Post and Troels smith data if required.
 ,,
 Humification levels,,
-H1,whitesmoke,Provide an entry for H1  colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H2,whitesmoke,Provide an entry for H2 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H3,lightgray,Provide an entry for H3 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H4,lightgray,Provide an entry for H4 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H5,darkgray,Provide an entry for H5 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H6,darkgray,Provide an entry for H6 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H7,gray,Provide an entry for H7 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H8,gray,Provide an entry for H8 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H9,black,Provide an entry for H9 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-H10,black,Provide an entry for H10 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
-N_A,white,Not applicable
+H1,linen,Provide an entry for H1  colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H2,bisque,Provide an entry for H2 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H3,navajowhite,Provide an entry for H3 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H4,wheat,Provide an entry for H4 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H5,orange,Provide an entry for H5 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H6,darkorange,Provide an entry for H6 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H7,peru,Provide an entry for H7 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H8,chocolate,Provide an entry for H8 colour option if required(colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H9,sienna,Provide an entry for H9 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+H10,saddlebrown,Provide an entry for H10 colour option if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+N_A,none,Not applicable
 ,,
 VON POST LEGEND,,
 legend_on_off_vp**,on,Provide an entry for legend for von Post data on or off. Options are on or off.
@@ -302,13 +302,13 @@ OTHER,,
 other_on_off**,on,Provide an entry for other display on or off. Options are on or off.
 ,,
 other_width,2,Provide an entry for other display width in mm if required.
-other_colour,black,Provide an entry for other colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
+other_colour,red,Provide an entry for other colour for geology data if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 other_line_colour,white,Provide an entry for line colour for other if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).
 ,,
 gap_between_TS_and_other,9,Provide an entry for gap in mm between other and Troels smith data if required.
 ,,
 CORE LABELS,,
-core_label_on_off**,on,Provide an entry for core label display on or off. Options are on or off.
+core_label_on_off**,off,Provide an entry for core label display on or off. Options are on or off.
 core_label_size,18,Provide an entry for core label font size if required.
 core_label_style,bold,"Provide an entry for core label style if required. Available options are normal, bold or italic."
 core_label_colour,black,Provide an entry for core label colour if required (colours can be selected from matplotlib named colours https://matplotlib.org/stable/gallery/color/named_colors.html).

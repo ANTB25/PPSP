@@ -337,9 +337,12 @@ join_dash_length_base = float(options["base_join_line_dash_length"].\
 # Obtain width of Troels Smith rectangles and seperating line colour ##########
 ###############################################################################    
 wid_x = float(options["ts_width_section**"].replace(" ",""))    
-pen_colour_rect = str(options["line_colour**"]).lower().replace(" ","")   
+pen_colour_rect = str(options["line_colour**"]).lower().replace(" ","")  
+pen_unrec_on_off = str(options["unrecovered_line_on_off**"]).lower().replace(" ","") 
+pen_colour_unrec = str(options["unrecovered_line_colour**"]).lower().replace(" ","") 
+fill_unrec = str(options["unrecovered_empty_fill**"]).lower().replace(" ","")  
 remove_seg = str(options["Remove segments**"]).lower().replace(" ","") 
-    
+  
 ###############################################################################
 # Obtain Troels Smith legend parameters #######################################
 ###############################################################################
@@ -565,13 +568,13 @@ class window_1():
         
         #######################################################################
         def silt_shapes (hi,wid,sym_col):
-            dave.pencolor("black")
-
             hi_inc = wid*0.1
             wid_inc = wid*0.4
             shape_wid = wid*0.3
             shape_hi = wid*0.2
             
+            ###################################################################
+            dave.pencolor("black")
             dave.penup()
             dave.setheading(270)
             dave.forward(hi)
@@ -579,6 +582,7 @@ class window_1():
             dave.setheading(90)
             dave.forward(hi)
             
+            ###################################################################
             dave.setheading(0)
             dave.forward(wid_inc)
            
@@ -621,12 +625,12 @@ class window_1():
         
         #######################################################################    
         def sand_shapes (hi,wid,sym_col):
-            dave.pencolor("black")
-        
             hi_inc = wid*0.1
             wid_inc = wid*0.4
             shape_hi = wid*0.15
             
+            ###################################################################
+            dave.pencolor("black")
             dave.penup()
             dave.setheading(270)
             dave.forward(hi)
@@ -673,12 +677,12 @@ class window_1():
 
         #######################################################################    
         def gravel_shapes (hi,wid,sym_col):
-            dave.pencolor("black")
-        
             hi_inc = wid*0.15
             wid_inc = wid*0.4
             shape_hi = wid*0.15
             
+            ###################################################################
+            dave.pencolor("black")
             dave.penup()
             dave.setheading(270)
             dave.forward(hi)
@@ -736,6 +740,8 @@ class window_1():
             
             same_col = "False"
             
+            ###################################################################
+            #remove segmentation if required by using same colour as fill
             if remove_seg == "on":
                 unique_names = set(name)
                 if  len(unique_names) == 1 and unique_names !="Ur":
@@ -743,6 +749,7 @@ class window_1():
                 else:
                     same_col = "False"
                     
+            ###################################################################
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
@@ -757,7 +764,7 @@ class window_1():
             dave.pendown()
             
             ###################################################################
-            
+            #create core labels if requested
             if core_label_on_off == "on":
                 if section_num == 0:
                     dave.pencolor(core_label_colour)
@@ -780,35 +787,62 @@ class window_1():
                 ge("Line colour")
                 
             try:
-                dave.fillcolor(col[0])
-            except:
+                dave.fillcolor(col[0]) 
+            except:                   
                  ge("TS colour entry")
                  
             ###################################################################
             dave.begin_fill()
             dave.pencolor(pen_colour_rect)
+            
+            if unrec == "yes":
+                if fill_unrec ==  "on":
+                    dave.end_fill()
+                if pen_unrec_on_off == "on":
+                    dave.pencolor(pen_colour_unrec)
+                    dave.pendown()
+                else:
+                    # dave.pencolor("white")
+                    dave.penup()
 
             dave.setheading(0)
             dave.forward(wid)
             
+            ###################################################################
             if unrec == "yes":
-                dave.pencolor("white")
+                # dave.end_fill()
+                if pen_unrec_on_off == "on":
+                    dave.pencolor(pen_colour_unrec)
+                    dave.pendown()
+                else:
+                    # dave.pencolor("white")
+                    dave.penup()
                                 
-            dave.setheading(270)
+            dave.setheading(270)  
             dave.forward(hi)
+            
+            ###################################################################
             dave.pencolor(pen_colour_rect)
             dave.setheading(180)
             dave.forward(wid)  
             
-            if unrec == "yes":
-                dave.pencolor("white")
-                
+            ###################################################################
+            if unrec == "yes" and pen_unrec_on_off == "on":
+                dave.pencolor(col[0])
+            
             if same_col == "True":
                 dave.pencolor(col[0])
                 
-            dave.setheading(90)            
+            dave.setheading(90)
+            dave.pendown()
+            
+            if unrec == "yes":
+                dave.penup()
+                
             dave.forward(hi) 
             dave.end_fill()
+            
+            ###################################################################
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
@@ -822,7 +856,7 @@ class window_1():
                         silt_shapes(hi,wid,sym_col)
                                
                 if name[0] == "As":
-                    if tex_dict_status["Argilla steatodes tex**"] == "on":
+                    if tex_dict_status["Argilla steatodes tex**"] == "on":   
                         sym_col = tex_dict_colour["Argilla steatodes tex**"]
                         silt_shapes(hi,wid,sym_col)
             
@@ -848,14 +882,15 @@ class window_1():
                     if tex_dict_status["Grana saburralia tex**"] == "on":
                         sym_col = tex_dict_colour["Grana saburralia tex**"]
                         sand_shapes(hi,wid,sym_col)
-                
+            
+            ###################################################################
             dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid)+shift,y)
             dave.pendown()
-            
-
             dave.pencolor(pen_colour_rect)
+            
+            ###################################################################
             ###################################################################
             #Error check entries
             try:
@@ -865,33 +900,42 @@ class window_1():
             
             ###################################################################
             dave.begin_fill()
+            
+            if unrec == "yes":
+                if fill_unrec ==  "on":
+                    dave.end_fill()
+                dave.penup()
+                
             dave.setheading(0)
             dave.pencolor(pen_colour_rect)
             dave.forward(wid) 
+            
+            ###################################################################
             dave.setheading(270)
             
-            if unrec == "yes":
-                dave.pencolor("white")
+            if unrec == "yes" and pen_unrec_on_off == "on":
+                dave.pencolor(col[0])
             
             if same_col == "True":
                 dave.pencolor(col[0])
         
             dave.forward(hi)
             
+            ###################################################################
             dave.setheading(180)
             dave.pencolor(pen_colour_rect)
             dave.forward(wid) 
             
-            if unrec == "yes":
-                dave.pencolor("white")
-                
+            ###################################################################
             if same_col == "True":
                 dave.pencolor(col[0])
                 
             dave.setheading(90)
+            dave.forward(hi)
             
-            dave.forward(hi) 
             dave.end_fill()
+            
+            #####################################################################
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
@@ -930,13 +974,14 @@ class window_1():
                     if tex_dict_status["Grana saburralia tex**"] == "on":
                         sym_col = tex_dict_colour["Grana saburralia tex**"]
                         sand_shapes(hi,wid,sym_col)
-
-             
+    
+            ###################################################################            
             dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid*2)+shift,y)
             dave.pendown()
             
+            ###################################################################
             if unrec == "yes":
                 dave.pencolor("white")
             elif same_col == "True":
@@ -944,6 +989,7 @@ class window_1():
             else:
                 dave.pencolor(pen_colour_rect)
             
+            ###################################################################
             ###################################################################
             #Error check entries
             try:
@@ -953,12 +999,19 @@ class window_1():
             
             ###################################################################
             dave.begin_fill()
+            
+            if unrec == "yes":
+                if fill_unrec ==  "on":
+                    dave.end_fill()
+                dave.penup()
+                
             dave.pencolor(pen_colour_rect)
             dave.setheading(0)
             dave.forward(wid) 
             
-            if unrec == "yes":
-                dave.pencolor("white")
+            ###################################################################
+            if unrec == "yes" and pen_unrec_on_off == "on":
+                dave.pencolor(col[0])
             elif same_col == "True":
                 dave.pencolor(col[0])
             else:
@@ -967,27 +1020,33 @@ class window_1():
             dave.setheading(270)
             dave.forward(hi)
             
+            ###################################################################
             dave.pencolor(pen_colour_rect)
             dave.setheading(180)
             
             dave.forward(wid)
             
-            if unrec == "yes":
-                dave.pencolor("white")
+            ###################################################################
+            if unrec == "yes" and pen_unrec_on_off == "on":
+                dave.pencolor(col[0])
             elif same_col == "True":
                 dave.pencolor(col[0])
             else:
                 dave.pencolor(pen_colour_rect)
                 
             dave.setheading(90)
-            dave.forward(hi) 
+            dave.forward(hi)
+            
+            ###################################################################
             dave.end_fill()
+                
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
             dave.penup() 
             dave.setpos((x-wid*2)+shift,y)
             
+            ###################################################################
             if name[2] == "Ag" or name[2] == "As":
                 if name[2] == "Ag":
                     if tex_dict_status["Argilla granosa tex**"] == "on":
@@ -1021,19 +1080,21 @@ class window_1():
                         sym_col = tex_dict_colour["Grana saburralia tex**"]
                         sand_shapes(hi,wid,sym_col)
 
-            
+            ###################################################################
             dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.setpos((x-wid*3)+shift,y)
             dave.pendown()
             
-            if unrec == "yes":
-                dave.pencolor("white")
+            ###################################################################
+            if unrec == "yes" and pen_unrec_on_off == "on":
+                dave.pencolor(col[0])
             elif same_col == "True":
                 dave.pencolor(col[0])
             else:
                 dave.pencolor(pen_colour_rect)
             
+            ###################################################################
             ###################################################################
             #Error check entries
             try:
@@ -1043,62 +1104,82 @@ class window_1():
             
             ###################################################################
             dave.begin_fill()
+            
+            if unrec == "yes":
+                if fill_unrec ==  "on":
+                    dave.end_fill()
+                dave.penup()
+                
             dave.setheading(0)
             dave.forward(wid) 
             
+            ###################################################################
             dave.setheading(270)
-            
-            if unrec == "yes":
-                dave.pencolor("white")
-            elif same_col == "True":
+
+            if same_col == "True":
                 dave.pencolor(col[0])
             else:
                 dave.pencolor(pen_colour_rect)
             
             dave.forward(hi)
             
+            ###################################################################
             dave.setheading(180)
             dave.pencolor(pen_colour_rect)
             dave.forward(wid) 
             
-            if unrec == "yes":
-                dave.pencolor("white")
-                dave.setheading(0)
-                dave.forward(wid*4)
-                dave.penup()
-                dave.setheading(180)
-                dave.forward(wid*4)
+            # if unrec == "yes":
+            #     dave.pencolor("white")
+            #     dave.setheading(0)
+            #     dave.forward(wid*4)
+            #     dave.penup()
+            #     dave.setheading(180)
+            #     dave.forward(wid*4)
 
             dave.pendown()
-  
+            ###################################################################
             dave.setheading(90)
             
             if unrec == "yes":
-                dave.pencolor("white")
-            else:
-                dave.pencolor(pen_colour_rect)
-                
+                dave.end_fill()
+                if pen_unrec_on_off == "on":
+                    dave.pencolor(pen_colour_unrec)
+                    dave.pendown()
+                else:
+                    dave.penup()  
 
             dave.forward(hi) 
-            dave.end_fill()
+            
+            ###################################################################
+            if unrec != "yes":
+                dave.end_fill()
             
             if unrec == "yes" or same_col == "True" :
                 dave.pendown()
                 dave.pencolor(pen_colour_rect)
+                
+                if unrec == "yes":
+                    if pen_unrec_on_off == "on":
+                        dave.pencolor(pen_colour_unrec)
+                        dave.pendown()
+                    else:
+                        dave.pencolor("white")
+                        dave.penup()
+                    
                 dave.setheading(0)
                 dave.forward(wid*4)
                 dave.penup()
                 dave.setheading(180)
                 dave.forward(wid*4)
-                
             
-                
+            ###################################################################
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
             dave.penup() 
             dave.setpos((x-wid*3)+shift,y)
             
+            ###################################################################
             if name[3] == "Ag" or name[3] == "As":
                 if name[3] == "Ag":
                     if tex_dict_status["Argilla granosa tex**"] == "on":
@@ -1132,6 +1213,7 @@ class window_1():
                         sym_col = tex_dict_colour["Grana saburralia tex**"]
                         sand_shapes(hi,wid,sym_col)
             
+            ###################################################################
             dave.pencolor(pen_colour_rect)
             dave.penup() 
             dave.hideturtle()
@@ -2414,10 +2496,17 @@ class window_1():
                 try:
                     dave.fillcolor(other_cols)
                 except:
-                    ge("Colour for von post or none troels smith")
+                    if other_cols == "none":
+                        pass
+                    else:
+                        ge("Colour for von post or none troels smith")
                     
                 ###############################################################    
                 dave.begin_fill()
+                if other_cols == "none":
+                   dave.end_fill() 
+                   dave.penup() 
+                   
                 dave.setheading(0)
                 dave.forward(wid) 
                 dave.setheading(270)
@@ -2707,6 +2796,7 @@ class window_1():
                    leg_label_h_adj = 0,
                    legend_txt_col = "black"):
             
+            ###################################################################
             dave.speed(f"{speed}")
             dave.hideturtle()
             dave.pensize(1)
@@ -2718,18 +2808,35 @@ class window_1():
             dave.forward(legend_y*pixels_mm)
             dave.setheading(270)
             dave.pendown()
-            dave.pencolor("black")
+            
+            ###################################################################
+            if label_2 == "Unrecovered**" or label_2 == "Unrecovered alt**":
+                if pen_unrec_on_off == "off":
+                   dave.penup()
+                else:
+                    dave.pencolor(pen_colour_unrec)
+            else:    
+                dave.pencolor("black")
             
             ###################################################################
             #Error check colour entry
             try:
-                dave.fillcolor(col)
+                if label_2 == "Unrecovered**" or label_2 == "Unrecovered alt**":
+                    dave.fillcolor(col)
+                else:
+                    dave.fillcolor(col)
             except:
-                ge("Colour for troels smith")
+                ge("Colour for troels smith")    
                 sys.exit()
             
             ###################################################################
             dave.begin_fill()
+            
+            if label_2 == "Unrecovered**" or label_2 == "Unrecovered alt**": 
+                if fill_unrec == "on":
+                    dave.end_fill()
+            
+            ###################################################################
             dave.forward(leg_height) 
             dave.setheading(0)
             dave.forward(leg_wid)
@@ -2749,7 +2856,6 @@ class window_1():
                 if tex_status["Argilla steatodes tex**"] == "on":
                     dave.pencolor(tex_colour["Argilla steatodes tex**"])
                     
-
                 if tex_status["Argilla granosa tex**"] == "on":
                     dave.pencolor(tex_colour["Argilla granosa tex**"])   
 
@@ -3432,7 +3538,7 @@ class window_1():
                         unrec = "no" 
                         
                     core_num = x   
-                    
+
                     rectangle(data_name[x][t],
                               data_colour[x][t],
                               wid,
@@ -3677,8 +3783,8 @@ class window_1():
                 y2_co = y_co - (diff_from_max[x]*pixels_mm)
                 
                 for t in range(section_number_core [x]-1): 
-                    if data_vp_colour[x][t] == "none":
-                        break
+                    # if data_vp_colour[x][t] == "none":
+                    #     break
                     
                     other(data_vp_colour[x][t],
                           vp_wid*pixels_mm,

@@ -99,6 +99,7 @@ def alt_ts_name_dict():
     
     alt_name_dict = {k:v for k,v in options.items()
                    if k in ts_list}
+
     alt_name_dict = {k:v for k,v in alt_name_dict.items()
                    if rem not in v}
 
@@ -191,12 +192,11 @@ def data_colour(core_column,
                 section_colours = [[colour_dict["Argilla granosa**"]
                                   if y.lower() == "ag" else y for y in x]
                                    for x in section_colours]
-                                  
                 section_colours = [[colour_dict["Argilla steatodes**"]
                                   if y.lower() == "as" else y for y in x] 
                                   for x in section_colours]
                 section_colours = [[colour_dict["Detritus granosus**"]
-                                  if y.lower == "dg" else y for y in x] 
+                                  if y.lower() == "dg" else y for y in x] 
                                   for x in section_colours]
                 section_colours = [[colour_dict["Detritus herbosus**"]
                                   if y.lower() == "dh" else y for y in x] 
